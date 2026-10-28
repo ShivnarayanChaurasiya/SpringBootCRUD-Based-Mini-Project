@@ -2,11 +2,10 @@ package com.example.curdSpring.controller;
 
 import com.example.curdSpring.entity.Student;
 import com.example.curdSpring.service.StudentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/students")
@@ -20,19 +19,27 @@ public class StudentController {
     //create student
     // @PostMapping
      @PostMapping("/create")
-public String createStudent(@RequestBody Student student){
-         System.out.println("Inside student controller ");
-         Student createStudent  = studentService.createStudent(student);
-         System.out.println("Exiting  student controller ");
-       return "Student created";
+
+     public ResponseEntity<Student> createStudent(
+             @RequestBody Student student) {
+
+         Student createdStudent  = studentService.createStudent(student);
+
+       return  ResponseEntity
+               .status(HttpStatus.CREATED)
+               .body(createdStudent);
 
 
-//         System.out.println(student.getName());
-//         System.out.println(student.getEmail());
+
 
 
 }
 // read student
+@GetMapping("/get")
+    public  ResponseEntity<Student> getStudents(@PathVariable Long id) {
+      Student studentResp = studentService.getStudent(id);
+      return ResponseEntity.ok(studentResp);
+   }
 
     // update student
 

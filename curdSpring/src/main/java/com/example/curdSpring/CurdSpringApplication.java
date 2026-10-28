@@ -16,7 +16,7 @@ public class CurdSpringApplication {
 
         SpringApplication.run(CurdSpringApplication.class, args);
 
-        System.out.println("Radhe Radhe");
+
 	}
 
 }

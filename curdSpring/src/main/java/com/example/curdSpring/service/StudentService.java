@@ -16,10 +16,14 @@ public class StudentService {
      public Student createStudent(Student studentReq){
          // business logic
          // store dbudent
-         System.out.println("Inside student Service ");
-         Student studentResp = studentRepository.saveStudent(studentReq);
-         System.out.println("Exiting  student Service ");
+        //  System.out.println("Inside student Service ");
+         Student studentResp = studentRepository.save(studentReq);
+        //  System.out.println("Exiting  student Service ");
          return studentResp;
+     }
+
+     public Student getStudent(Long id){
+         Student studentResp = studentRepository.getOne(id);
      }
 
     // 1. End point listen (/app/students POST)
