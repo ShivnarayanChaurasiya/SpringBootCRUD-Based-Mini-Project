@@ -5,6 +5,9 @@ import com.example.curdSpring.repository.StudentRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StudentService {
 
@@ -23,9 +26,32 @@ public class StudentService {
      }
 
      public Student getStudent(Long id){
-         Student studentResp = studentRepository.getOne(id);
+          Optional<Student> studentResp = studentRepository.findById(id);
+          if(studentResp.isPresent()){
+              return studentResp.get();
+          }
+          return null ;
+     }
+     public List<Student> getAllStudent(){
+         List<Student> studentList = studentRepository.findAll();
+         return studentList;
      }
 
+    public Student updateStudent(Long id , Student studentReq ) {
+        Optional<Student> exitstingStudent= studentRepository.findById(id);
+        if (exitstingStudent.isEmpty()) {
+
+            return null;
+        }
+        Student studentToSave = exitstingStudent.get();
+
+        studentToSave.setName(studentReq.getName());
+        studentToSave.setAge(studentReq.getAge());
+            studentToSave.setRollNo(studentReq.getRollNo());
+            studentToSave.setSubject(studentReq.getSubject());
+            studentToSave.setEmail(studentReq.getEmail());
+            return studentRepository.save(studentToSave);
+    }
     // 1. End point listen (/app/students POST)
 
      // 2. Business logic
