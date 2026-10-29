@@ -52,6 +52,16 @@ public class StudentService {
             studentToSave.setEmail(studentReq.getEmail());
             return studentRepository.save(studentToSave);
     }
+
+    public Boolean deleteStudent(Long id ){
+         Boolean isStudent = studentRepository.existsById(id);
+         if (!isStudent) {
+             return false;
+         }
+         studentRepository.deleteById(id);
+         return true;
+
+    }
     // 1. End point listen (/app/students POST)
 
      // 2. Business logic
